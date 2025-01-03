@@ -8,6 +8,7 @@ OS Util is a utility library developed in Java for managing operating system pre
 - Retrieve all stored preferences
 - Update or save key-value pairs
 - Store JSON data as preferences
+- Configure system properties for optimized performance
 
 ## Installation
 
@@ -25,12 +26,6 @@ OS Util is a utility library developed in Java for managing operating system pre
     <groupId>com.github.hidirektor</groupId>
     <artifactId>os-util</artifactId>
     <version>v1.0.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20231013</version>
 </dependency>
 ```
 
@@ -73,6 +68,23 @@ JSONObject jsonObject = new JSONObject();
 jsonObject.put("name", "example");
 OSUtil.saveJsonIntoPref("nodeName", "key", jsonObject);
 ```
+
+### Creating Nested Preferences
+```java
+Preferences prefs = Preferences.userRoot().node("Canicula/releases");
+prefs.put("key", "value");
+```
+This example creates a nested structure with a parent folder named 'Canicula' and a subfolder named 'releases'.
+
+### Configuring System Properties
+```java
+DesktopUtil.configureSystemProperties();
+```
+This method configures system properties for JavaFX and logging based on the operating system.
+
+- **Windows**: Enables software rendering, high-performance animations, and verbose logs.
+- **macOS**: Configures PDF rendering verbosity and hides UI elements.
+- Sets the logging level to 'WARNING'.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
