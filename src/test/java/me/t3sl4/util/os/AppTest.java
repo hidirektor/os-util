@@ -1,4 +1,4 @@
-package me.t3sl4.util.version;
+package me.t3sl4.util.os;
 
 import org.junit.jupiter.api.Test;
 

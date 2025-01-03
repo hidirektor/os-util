@@ -30,7 +30,7 @@ jobs:
       - name: Fetch Remote Version
         id: remote_version
         run: |
-          REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/hidirektor/version-util/master/pom.xml | grep -oPm1 "(?<=<version>)[^<]+")
+          REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/hidirektor/os-util/master/pom.xml | grep -oPm1 "(?<=<version>)[^<]+")
           echo "REMOTE_VERSION=$REMOTE_VERSION" >> $GITHUB_ENV
 
       - name: Compare Versions
@@ -67,4 +67,4 @@ jobs:
 
       - name: Trigger JitPack Build
         run: |
-          curl -X POST https://jitpack.io/com/github/hidirektor/version-util/${{ env.VERSION }}
+          curl -X POST https://jitpack.io/com/github/hidirektor/os-util/${{ env.VERSION }}

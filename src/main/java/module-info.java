@@ -1,11 +1,6 @@
-module me.t3sl4.util.version {
-    requires java.net.http;
-    requires com.google.gson;
-    requires org.apache.httpcomponents.httpclient;
-    requires org.apache.httpcomponents.httpcore;
+module me.t3sl4.util.os {
     requires java.prefs;
+    requires org.json;
 
-    exports me.t3sl4.util.version;
-    exports me.t3sl4.util.version.exception;
-    exports me.t3sl4.util.version.model;
+    exports me.t3sl4.util.os;
 }
