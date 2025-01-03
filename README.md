@@ -23,9 +23,9 @@ OS Util is a utility library developed in Java for managing operating system pre
 </repositories>
 
 <dependency>
-    <groupId>com.github.hidirektor</groupId>
-    <artifactId>os-util</artifactId>
-    <version>v1.0.0</version>
+<groupId>com.github.hidirektor</groupId>
+<artifactId>os-util</artifactId>
+<version>v1.0.0</version>
 </dependency>
 ```
 
@@ -85,6 +85,19 @@ This method configures system properties for JavaFX and logging based on the ope
 - **Windows**: Enables software rendering, high-performance animations, and verbose logs.
 - **macOS**: Configures PDF rendering verbosity and hides UI elements.
 - Sets the logging level to 'WARNING'.
+
+### Retrieving Preference Data
+```java
+String data = OSUtil.getPrefData("nodeName", "key");
+System.out.println("Value: " + data);
+```
+This method retrieves the value stored in the given key under the specified node. Returns an empty string if the key doesn't exist.
+
+### Updating Local Version
+```java
+OSUtil.updateLocalVersion("nodeName", "versionKey", "1.0.1");
+```
+This method updates the stored version data only if it differs from the provided new data.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
