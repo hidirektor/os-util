@@ -1,0 +1,70 @@
+name: Maven Publish
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'pom.xml'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          server-id: github
+          settings-path: ${{ github.workspace }}
+
+      - name: Extract Local Version
+        id: local_version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Fetch Remote Version
+        id: remote_version
+        run: |
+          REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/hidirektor/version-util/master/pom.xml | grep -oPm1 "(?<=<version>)[^<]+")
+          echo "REMOTE_VERSION=$REMOTE_VERSION" >> $GITHUB_ENV
+
+      - name: Compare Versions
+        id: compare
+        run: |
+          echo "Local Version: ${{ env.VERSION }}"
+          echo "Remote Version: ${{ env.REMOTE_VERSION }}"
+          if [ "${{ env.VERSION }}" == "${{ env.REMOTE_VERSION }}" ]; then
+            echo "No new version detected. Skipping deployment."
+            exit 0
+          else
+            echo "New version detected: ${{ env.VERSION }}. Proceeding with deployment."
+          fi
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Publish to GitHub Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          name: v${{ env.VERSION }} - New Version 🚀
+          body: |
+            This version includes important updates and improvements.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+
+      - name: Trigger JitPack Build
+        run: |
+          curl -X POST https://jitpack.io/com/github/hidirektor/version-util/${{ env.VERSION }}
