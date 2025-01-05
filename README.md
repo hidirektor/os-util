@@ -9,6 +9,8 @@ OS Util is a utility library developed in Java for managing operating system pre
 - Update or save key-value pairs
 - Store JSON data as preferences
 - Configure system properties for optimized performance
+- Create desktop shortcuts and add programs to startup
+- Open external applications, files, or directories
 
 ## Installation
 
@@ -85,6 +87,34 @@ This method configures system properties for JavaFX and logging based on the ope
 - **Windows**: Enables software rendering, high-performance animations, and verbose logs.
 - **macOS**: Configures PDF rendering verbosity and hides UI elements.
 - Sets the logging level to 'WARNING'.
+
+### Creating Desktop Shortcut
+```java
+DesktopUtil.createDesktopShortcut(
+    "MyApp",
+    "C:/Program Files/MyApp/MyApp.exe",
+    "C:/Program Files/MyApp/icon.ico",
+    "C:/Program Files/MyApp"
+);
+```
+This method creates a desktop shortcut for an application with the specified name, target path, icon, and working directory.
+
+### Adding Program to Startup
+```java
+DesktopUtil.addToStartup(
+    "MyApp",
+    "C:/Program Files/MyApp/MyApp.exe",
+    "C:/Program Files/MyApp/icon.ico",
+    "C:/Program Files/MyApp"
+);
+```
+This method adds a shortcut for the application to the Windows startup folder, enabling it to launch at system startup.
+
+### Opening External Application
+```java
+DesktopUtil.startExternalApplication("C:/Program Files/MyApp/MyApp.exe");
+```
+This method opens a specified file or directory using the default application associated with it.
 
 ### Retrieving Preference Data
 ```java

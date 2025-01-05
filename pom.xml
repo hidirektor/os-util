@@ -6,7 +6,7 @@
 
     <groupId>me.t3sl4.util</groupId>
     <artifactId>os-util</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>OS Util</name>
@@ -35,6 +35,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20231013</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.vatbub</groupId>
+            <artifactId>mslinks</artifactId>
+            <version>1.0.6.2</version>
         </dependency>
     </dependencies>
 
