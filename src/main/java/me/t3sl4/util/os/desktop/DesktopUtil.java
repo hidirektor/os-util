@@ -103,16 +103,22 @@ public class DesktopUtil {
      * @param path The path to the file or folder to open.
      * @throws IOException If an error occurs during opening.
      */
-    public static void startExternalApplication(String path) throws IOException {
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new IOException("File or directory does not exist: " + path);
-        }
+    public static void startExternalApplicationAsync(String path) {
+        new Thread(() -> {
+            try {
+                File file = new File(path);
+                if (!file.exists()) {
+                    throw new IOException("File or directory does not exist: " + path);
+                }
 
-        if (Desktop.isDesktopSupported()) {
-            Desktop.getDesktop().open(file);
-        } else {
-            throw new UnsupportedOperationException("Desktop is not supported on this platform.");
-        }
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    throw new UnsupportedOperationException("Desktop is not supported on this platform.");
+                }
+            } catch (IOException | UnsupportedOperationException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
